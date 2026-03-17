@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -34,10 +35,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-            <body className="min-h-screen flex flex-col font-sans antialiased">
-                {children}
-            </body>
-        </html>
+        <ClerkProvider>
+            <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+                <body className="min-h-screen flex flex-col font-sans antialiased">
+                    {children}
+                </body>
+            </html>
+        </ClerkProvider>
     );
 }
