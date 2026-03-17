@@ -1,5 +1,10 @@
 import { authMiddleware } from "@clerk/nextjs/server";
 
+// Fallback for build time
+if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_Y2xlcmstZHVtbXkta2V5LWZvci1idWlsZC00Mg==";
+}
+
 export default authMiddleware({
     // Routes accessible without signing in
     publicRoutes: [

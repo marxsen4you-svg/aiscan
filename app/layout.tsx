@@ -3,6 +3,11 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
+// Fallback for build time
+if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_Y2xlcmstZHVtbXkta2V5LWZvci1idWlsZC00Mg==";
+}
+
 const spaceGrotesk = Space_Grotesk({
     subsets: ['latin'],
     weight: ['400', '500', '600', '700'],
