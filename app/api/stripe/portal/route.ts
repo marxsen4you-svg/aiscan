@@ -1,7 +1,9 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { getUserProfile, upsertUserProfile } from "@/lib/db";
+import { getUserProfile } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
     const { userId } = auth();

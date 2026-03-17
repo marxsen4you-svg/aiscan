@@ -3,8 +3,6 @@ import { stripe } from "@/lib/stripe";
 import { upsertUserProfile } from "@/lib/db";
 import type Stripe from "stripe";
 
-export const config = { api: { bodyParser: false } };
-
 export async function POST(req: Request) {
     const body = await req.text();
     const sig = req.headers.get("stripe-signature");
