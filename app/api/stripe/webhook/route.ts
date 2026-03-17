@@ -3,16 +3,23 @@ import { stripe } from "@/lib/stripe";
 import { upsertUserProfile } from "@/lib/db";
 import type Stripe from "stripe";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
     const body = await req.text();
     const sig = req.headers.get("stripe-signature");
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     if (!sig) return NextResponse.json({ error: "No signature" }, { status: 400 });
+    if (!webhookSecret && process.env.NODE_ENV === "production") {
+        console.error("STRIPE_WEBHOOK_SECRET is missing.");
+        return NextResponse.json({ error: "Configuration error" }, { status: 500 });
+    }
 
     let event: Stripe.Event;
 
     try {
-        event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
+        event = stripe.webhooks.constructEvent(body, sig, webhookSecret || "whsec_placeholder");
     } catch (err) {
         console.error("[webhook] Invalid signature:", err);
         return NextResponse.json({ error: "Invalid signature" }, { status: 400 });

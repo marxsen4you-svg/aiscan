@@ -1,7 +1,7 @@
 import Stripe from "stripe";
-const stripeSecret = process.env.STRIPE_SECRET_KEY || "";
+const stripeSecret = process.env.STRIPE_SECRET_KEY || "sk_test_building_placeholder";
 
-if (!stripeSecret && process.env.NODE_ENV === "production") {
+if (!process.env.STRIPE_SECRET_KEY && process.env.NODE_ENV === "production") {
     console.warn("STRIPE_SECRET_KEY is missing. Stripe features will fail at runtime.");
 }
 
